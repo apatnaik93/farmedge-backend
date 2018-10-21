@@ -1,0 +1,21 @@
+const mongoose = require('mongoose');
+const randomString = require('random-string');
+
+
+var pumpOperationSchema = new mongoose.Schema({
+  operationId: {
+    type: String,
+    default: 'PMP' + randomString({length: 5, numeric: true, letters: false, special: false})+ Date.now()
+  },
+  deviceId: {
+    type: String
+  },
+  onTime: {
+    type:Date
+  },
+  offTime: {
+    type:Date
+  }
+});
+
+module.exports = mongoose.model('PumpOperation', pumpOperationSchema);
