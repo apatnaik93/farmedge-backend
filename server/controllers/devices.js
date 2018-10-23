@@ -1,5 +1,5 @@
 require('./../configs/config');
-const mongoose = require('./../db/mongoose');
+// const mongoose = require('./../db/mongoose');
 const Device = require('./../models/Device');
 const router = require('express').Router();
 
