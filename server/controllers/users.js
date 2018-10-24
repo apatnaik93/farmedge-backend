@@ -9,13 +9,21 @@ router.use(function (req, res, next) {
   next();
 });
 
+function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 8; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+}
+
 router.post('/registerUser', (req, res) => {
-  console.log(req.body);
   User.findOne({'mobile': req.body.mobile}).then(user => {
     if (user) {
       res.send({user});
     } else {
       var newUser = new User({
+        userId: "USR" + makeid() + Date.now(),
         name: req.body.name,
         mobile: req.body.mobile,
         email: req.body.email,

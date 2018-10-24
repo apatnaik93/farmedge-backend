@@ -3,8 +3,7 @@ const randomString = require('random-string');
 
 var deviceSchema = new mongoose.Schema({
   deviceId: {
-    type: String,
-    default: 'DVS' + randomString({length: 5, numeric: true, letters: false, special: false})+ Date.now()
+    type: String
   },
   userId: {
     type: String
@@ -18,7 +17,14 @@ var deviceSchema = new mongoose.Schema({
   },
   location: {
     type: String
+  },
+  status:{
+    type: Boolean,
+    default: false
+  },
+  operationId:{
+    type: String
   }
 });
 
-module.exports = mongoose.model('Device', deviceSchema);
+var Device = module.exports = mongoose.model('Device', deviceSchema);

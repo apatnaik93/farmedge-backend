@@ -1,5 +1,4 @@
 require('./../configs/config');
-// const mongoose = require('./../db/mongoose');
 const Device = require('./../models/Device');
 const router = require('express').Router();
 
@@ -9,12 +8,21 @@ router.use(function (req, res, next) {
   next();
 });
 
+function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 8; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+}
+
 router.post('/registerDevice', (req, res) => {
-  User.findOne([{'simNumber': req.body.simNumber}]).then(device => {
+  Device.findOne({'simNumber': req.body.simNumber}).then(device => {
     if (device) {
       res.send({device});
     } else {
       var newDevice = new Device({
+        deviceId: "DVS" + makeid() + Date.now(),
         userId: req.body.userId,
         name: req.body.name,
         simNumber: req.body.simNumber,

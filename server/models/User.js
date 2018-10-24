@@ -4,13 +4,14 @@ const randomString = require('random-string');
 var userSchema = new mongoose.Schema({
   userId: {
     type: String,
-    default: 'USR' + randomString({length: 5, numeric: true, letters: false, special: false}) + Date.now()
+    unique: true
   },
   name: {
     type: String
   },
   email: {
-    type: String
+    type: String,
+
   },
   mobile: {
     type: String,
