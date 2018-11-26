@@ -64,7 +64,7 @@ router.put('/offOpeartion', (req, res) => {
   })
 });
 
-router.get('allOperations/:deviceId', (req, res) => {
+router.get('/allOperations/:deviceId', (req, res) => {
   PumpOperation.find({'deviceId': req.params.deviceId}).then((operations) => {
     res.send({operations});
   }).catch(e => {
