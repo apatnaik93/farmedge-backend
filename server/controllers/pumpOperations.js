@@ -20,7 +20,7 @@ function makeid() {
 }
 
 router.post('/onOperation', (req, res) => {
-    var startTime = moment().tz('Asia/Kolkata').format();
+    var startTime = moment().format();
     var newOperation = new PumpOperation({
         operationId: "POP" + makeid() + Date.now(),
         deviceId: req.body.deviceId,
@@ -46,7 +46,7 @@ router.post('/onOperation', (req, res) => {
 
 router.put('/offOpeartion', (req, res) => {
     var body = {
-        offTime: moment().tz('Asia/Kolkata').format()
+        offTime: moment().format()
     };
     PumpOperation.findOneAndUpdate({operationId: req.body.operationId}, {$set: body}, {new: true}).then((pumpOperation) => {
         var deviceBody = {
@@ -64,8 +64,8 @@ router.put('/offOpeartion', (req, res) => {
     })
 });
 
-router.get('/allOperations/:deviceId', (req, res) => {
-    PumpOperation.find({'deviceId': req.params.deviceId}).then((operations) => {
+router.get('/allOperations', (req, res) => {
+    PumpOperation.find().then((operations) => {
         res.send({operations});
     }).catch(e => {
         res.status(400).send();
