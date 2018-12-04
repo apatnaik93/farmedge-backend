@@ -1,5 +1,7 @@
 require('./../configs/config');
+const mongoose = require('./../db/mongoose');
 const Device = require('./../models/Device');
+const User = require('./../models/User');
 const router = require('express').Router();
 
 router.use(function (req, res, next) {
@@ -38,16 +40,26 @@ router.post('/registerDevice', (req, res) => {
 });
 
 router.put('/updateDevice', (req, res) => {
-    var device = new Device({
+    var updatedDevice = {
         name: req.body.name,
         simNumber: req.body.simNumber,
         location: req.body.location
-    });
-    Device.findOneAndUpdate({'deviceId': req.body.deviceId}, {$set: device}, {new: true}).then((device) => {
+    };
+    Device.findOneAndUpdate({'deviceId': req.body.deviceId}, {$set: updatedDevice}, {new: true}).then((device) => {
+        console.log(device);
         res.send({device});
     }).catch((err) => {
         res.status(400).send();
-    });
+    })
+});
+
+router.delete('/deleteDevice/:deviceId', (req, res) => {
+    console.log(req.params.deviceId);
+    Device.remove({'deviceId': req.params.deviceId}).then((response) => {
+        res.send({response});
+    }).catch((err) => {
+        res.status(400).send();
+    })
 });
 
 router.get('/getDevices/:userId', (req, res) => {
